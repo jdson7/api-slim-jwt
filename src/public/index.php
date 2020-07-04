@@ -59,20 +59,6 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     return $response;
 });
 
-$app->get('/dolar', function (Request $request, Response $response, array $args) {
-    $client = new GuzzleHttp\Client(['base_uri' => 'https://economia.awesomeapi.com.br/json']);
-    $res = $client->request('GET', '/all/USD-BRL');
-    
-    //Se a API retornou a cotacao do dolar responde com os dados, senao retorna msg de erro
-    if($res->getStatusCode() == 200){
-        $return = $response->withJson(json_decode($res->getBody()), 200)->withHeader('Content-type', 'application/json');
-    }else{
-        $return = $response->withJson(json_decode('{"message": "Desculpe, não foi possível recuperar o valor do dólar nesse momento."}'), 500)->withHeader('Content-type', 'application/json');
-    }
-
-    return $return;
-});
-
 /**
  * HTTP Auth - Autenticação minimalista para retornar um JWT
  */
